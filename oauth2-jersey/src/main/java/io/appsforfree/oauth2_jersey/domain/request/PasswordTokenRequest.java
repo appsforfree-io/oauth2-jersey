@@ -29,4 +29,8 @@ public class PasswordTokenRequest extends TokenRequest
 				&& password != null 
 				&& !password.isEmpty();
 	}
+	
+	public String getUsername() { return username; }
+	
+	public String getPassword() { return password; }
 }

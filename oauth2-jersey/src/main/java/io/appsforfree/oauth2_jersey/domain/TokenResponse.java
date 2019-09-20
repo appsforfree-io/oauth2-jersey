@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TokenResponse 
 {
 	private String accessToken;
-	private String tokenType;
+	private TokenType tokenType;
 	private long expiresIn;
 	private String refreshToken;
 	private String scope;
 	
 	public TokenResponse(
 			String accessToken, 
-			String tokenType)
+			TokenType tokenType)
 	{
 		this.accessToken = accessToken;
 		this.tokenType = tokenType;
@@ -22,7 +22,7 @@ public class TokenResponse
 	
 	public TokenResponse(
 			String accessToken, 
-			String tokenType, 
+			TokenType tokenType, 
 			long expiresIn, 
 			String refreshToken, 
 			String scope)
@@ -38,7 +38,18 @@ public class TokenResponse
 	public String getAccessToken() { return accessToken; }
 	
 	@JsonProperty("token_type")
-	public String getTokenType() { return tokenType; }
+	public String getTokenType() 
+	{ 
+		switch (tokenType)
+		{
+			case BASIC:
+				return "Basic";
+			case BEARER:
+				return "Bearer";
+			default:
+				return null;
+		}
+	}
 	
 	@JsonProperty("expires_in")
 	@JsonInclude(Include.NON_EMPTY)
