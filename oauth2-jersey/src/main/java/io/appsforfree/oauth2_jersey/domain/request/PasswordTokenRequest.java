@@ -19,4 +19,14 @@ public class PasswordTokenRequest extends TokenRequest
 		super.clientSecret = clientSecret;
 		super.scope = scope;
 	}
+
+	@Override
+	public boolean isValid() 
+	{
+		return 
+				username != null 
+				&& !username.isEmpty() 
+				&& password != null 
+				&& !password.isEmpty();
+	}
 }
