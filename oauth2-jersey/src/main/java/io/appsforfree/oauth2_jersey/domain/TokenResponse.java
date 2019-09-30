@@ -6,18 +6,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TokenResponse 
 {
+	@JsonProperty("access_token")
 	private String accessToken;
-	private TokenType tokenType;
+	@JsonProperty("token_type")
+	private String tokenType;
+	@JsonProperty("expires_in")
+	@JsonInclude(Include.NON_EMPTY)
 	private long expiresIn;
+	@JsonProperty("refresh_token")
+	@JsonInclude(Include.NON_EMPTY)
 	private String refreshToken;
+	@JsonInclude(Include.NON_EMPTY)
 	private String scope;
+	
+	public TokenResponse() {}
 	
 	public TokenResponse(
 			String accessToken, 
 			TokenType tokenType)
 	{
 		this.accessToken = accessToken;
-		this.tokenType = tokenType;
+		this.tokenType = getTokenType(tokenType);
 	}
 	
 	public TokenResponse(
@@ -28,18 +37,14 @@ public class TokenResponse
 			String scope)
 	{
 		this.accessToken = accessToken;
-		this.tokenType = tokenType;
+		this.tokenType = getTokenType(tokenType);
 		this.expiresIn = expiresIn;
 		this.refreshToken = refreshToken;
 		this.scope = scope;
 	}
 	
-	@JsonProperty("access_token")
-	public String getAccessToken() { return accessToken; }
-	
-	@JsonProperty("token_type")
-	public String getTokenType() 
-	{ 
+	private String getTokenType(TokenType tokenType)
+	{
 		switch (tokenType)
 		{
 			case BASIC:
@@ -51,14 +56,18 @@ public class TokenResponse
 		}
 	}
 	
-	@JsonProperty("expires_in")
-	@JsonInclude(Include.NON_EMPTY)
+	public String getAccessToken() { return accessToken; }
+	public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
+	
+	public String getTokenType() { return tokenType;}
+	public void setTokenType(String tokenType) { this.tokenType = tokenType; }
+	
 	public long getExpiresIn() { return expiresIn; }
+	public void setExpiresIn(long expiresIn) { this.expiresIn = expiresIn; }
 	
-	@JsonProperty("refresh_token")
-	@JsonInclude(Include.NON_EMPTY)
 	public String getRefreshToken() { return refreshToken; }
+	public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 	
-	@JsonInclude(Include.NON_EMPTY)
 	public String getScope() { return scope; }
+	public void setScope(String scope) { this.scope = scope; }
 }

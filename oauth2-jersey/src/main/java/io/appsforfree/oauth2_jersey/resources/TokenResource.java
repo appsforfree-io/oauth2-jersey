@@ -10,7 +10,9 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import io.appsforfree.oauth2_jersey.business.TokenRequestManager;
+import io.appsforfree.oauth2_jersey.domain.ErrorResponse;
 import io.appsforfree.oauth2_jersey.domain.TokenResponse;
+import io.appsforfree.oauth2_jersey.domain.exception.ErrorResponseException;
 import io.appsforfree.oauth2_jersey.domain.request.TokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.TokenRequestFactory;
 
@@ -24,10 +26,28 @@ public class TokenResource
 			@HeaderParam("Authorization") String authorization, 
 			MultivaluedMap<String, String> body) 
 	{
-		TokenRequest tokenRequest = TokenRequestFactory.createRequest(body, authorization);
-		TokenResponse tokenResponse = TokenRequestManager.generateAccessToken(tokenRequest);
-		if (tokenResponse == null)
-			return Response.status(400).build();
-		return Response.ok().entity(tokenResponse).build();
+		try
+		{
+			TokenRequest tokenRequest = TokenRequestFactory.createRequest(body, authorization);
+			TokenResponse tokenResponse = TokenRequestManager.generateAccessToken(tokenRequest);
+			if (tokenResponse == null)
+				return Response.status(400).build();
+			return Response.ok().entity(tokenResponse).build();
+		}
+		catch (ErrorResponseException e)
+		{
+			return Response
+					.status(e.getStatus())
+					.entity(new ErrorResponse(
+							e.getErrorType(), 
+							e.getMessage(), 
+							null))
+					.build();
+		}
+		catch (Exception e)
+		{
+			System.out.println("EXCEPTION THROWN: "+e.getMessage());
+			return Response.status(500).build();
+		}
 	}
 }
