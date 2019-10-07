@@ -1,7 +1,5 @@
 package io.appsforfree.oauth2_jersey.test.dataaccess;
 
-import java.io.FileInputStream;
-
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
