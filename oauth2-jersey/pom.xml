@@ -9,12 +9,18 @@
   <url>http://maven.apache.org</url>
   <properties>
       <jersey.version>2.27</jersey.version>
-      <junit.version>4.12</junit.version>
+      <junit.version>5.5.2</junit.version>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
@@ -28,6 +34,12 @@
       <groupId>org.dbunit</groupId>
 	  <artifactId>dbunit</artifactId>
 	  <version>2.5.1</version>
+	  <scope>test</scope>
+	</dependency>
+	<dependency>
+      <groupId>org.opentest4j</groupId>
+	  <artifactId>opentest4j</artifactId>
+	  <version>1.2.0</version>
 	  <scope>test</scope>
 	</dependency>
     <dependency>

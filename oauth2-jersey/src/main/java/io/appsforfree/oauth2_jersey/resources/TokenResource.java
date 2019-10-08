@@ -29,7 +29,9 @@ public class TokenResource
 		try
 		{
 			TokenRequest tokenRequest = TokenRequestFactory.createRequest(body, authorization);
-			TokenResponse tokenResponse = TokenRequestManager.generateAccessToken(tokenRequest);
+			TokenResponse tokenResponse = TokenRequestManager
+					.getInstance()
+					.generateAccessToken(tokenRequest);
 			if (tokenResponse == null)
 				return Response.status(400).build();
 			return Response.ok().entity(tokenResponse).build();
