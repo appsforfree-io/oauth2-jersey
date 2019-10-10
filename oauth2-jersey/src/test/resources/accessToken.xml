@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
 	<Client client_id='12345' client_secret='54321' client_type='confidential' />
+	<SupportedGrantType client_id='12345' grant_type='password' />
+	<Client client_id='123456' client_secret='654321' client_type='public' />
+	<SupportedGrantType client_id='123456' grant_type='client_credentials' />
 	<User username='myUsername' password='myPassword' />
     <RefreshToken refresh_token='abcdefghijklmnopqrstuvwxyz' client_id='12345' username='myUsername' />
     <AccessToken access_token="accessTokenWithRefreshToken" refresh_token='abcdefghijklmnopqrstuvwxyz' client_id='12345' username='myUsername' />

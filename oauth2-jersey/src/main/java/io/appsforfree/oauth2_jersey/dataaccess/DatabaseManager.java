@@ -1,5 +1,6 @@
 package io.appsforfree.oauth2_jersey.dataaccess;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +29,7 @@ public class DatabaseManager
 		Properties dbProperties = new Properties();
 		InputStream fis;
 		try {
-			fis = this.getClass().getResourceAsStream("database.properties");
+			fis = new FileInputStream("src/main/resources/database.properties");
 			dbProperties.load(fis);
 			driver = dbProperties.getProperty("db.driver.class");
 			dataSource.setUrl(dbProperties.getProperty("db.conn.url"));

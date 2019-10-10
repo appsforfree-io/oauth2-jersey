@@ -2,13 +2,14 @@ package io.appsforfree.oauth2_jersey.test.business;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.FileInputStream;
+
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.appsforfree.oauth2_jersey.business.TokenRequestManager;
@@ -16,6 +17,7 @@ import io.appsforfree.oauth2_jersey.domain.request.PasswordTokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.TokenRequest;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidClientException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidRequestException;
+import io.appsforfree.oauth2_jersey.domain.exception.UnauthorizedClientException;
 
 public class TokenRequestManagerTest extends DBTestCase
 {
@@ -32,7 +34,7 @@ public class TokenRequestManagerTest extends DBTestCase
 	protected IDataSet getDataSet() throws Exception 
 	{
 		// TODO Auto-generated method stub
-		return new FlatXmlDataSetBuilder().build(this.getClass().getResourceAsStream("accessToken.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/accessToken.xml"));
 	}
 	
 	@Override
@@ -105,6 +107,20 @@ public class TokenRequestManagerTest extends DBTestCase
 					"myPassword", 
 					"12345", 
 					"543210", 
+					"profile");
+			TokenRequestManager.getInstance().generateAccessToken(passwordTokenRequest);
+		});
+	}
+	
+	@Test
+	public void test_generateAccessToken_clientDoesntSupportPasswordGrantType_throwInvalidClientException() throws Exception
+	{
+		assertThrows(UnauthorizedClientException.class, () -> {
+			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
+					"myUsername", 
+					"myPassword", 
+					"123456", 
+					"654321", 
 					"profile");
 			TokenRequestManager.getInstance().generateAccessToken(passwordTokenRequest);
 		});

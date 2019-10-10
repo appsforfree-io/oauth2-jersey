@@ -15,7 +15,7 @@ public class InvalidClientException extends ErrorResponseException
 	}
 	
 	@Override
-	public int getStatus() { return 400; }
+	public int getStatus() { return 401; }
 	
 	@Override
 	public ErrorType getErrorType() { return ErrorType.INVALIDCLIENT; }

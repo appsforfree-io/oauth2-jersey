@@ -8,19 +8,15 @@
   <name>oauth2-jersey Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
-      <jersey.version>2.27</jersey.version>
+      <jersey.version>2.29.1</jersey.version>
       <junit.version>5.5.2</junit.version>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
+      <artifactId>junit-jupiter</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
@@ -113,5 +109,15 @@
   </dependencies>
   <build>
     <finalName>oauth2-jersey</finalName>
+    <testResources>
+        <testResource>
+            <directory>${project.basedir}/src/test/resources</directory>
+        </testResource>
+    </testResources>
+    <resources>
+    	<resource>
+       		<directory>${project.basedir}/src/main/resources</directory>
+     	</resource>
+   	</resources>
   </build>
 </project>

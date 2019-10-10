@@ -1,5 +1,7 @@
 package io.appsforfree.oauth2_jersey.test.dataaccess;
 
+import java.io.FileInputStream;
+
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
@@ -25,7 +27,8 @@ public class ClientStoreTest extends DBTestCase
 	protected IDataSet getDataSet() throws Exception 
 	{
 		// TODO Auto-generated method stub
-		return new FlatXmlDataSetBuilder().build(this.getClass().getResourceAsStream("client.xml"));
+		return new FlatXmlDataSetBuilder()
+				.build(new FileInputStream("src/test/resources/client.xml"));
 	}
 	
 	@Override
