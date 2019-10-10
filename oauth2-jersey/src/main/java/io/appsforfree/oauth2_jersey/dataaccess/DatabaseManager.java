@@ -29,7 +29,7 @@ public class DatabaseManager
 		Properties dbProperties = new Properties();
 		InputStream fis;
 		try {
-			fis = new FileInputStream("src/main/resources/database.properties");
+			fis = getClass().getClassLoader().getResourceAsStream("database.properties");
 			dbProperties.load(fis);
 			driver = dbProperties.getProperty("db.driver.class");
 			dataSource.setUrl(dbProperties.getProperty("db.conn.url"));

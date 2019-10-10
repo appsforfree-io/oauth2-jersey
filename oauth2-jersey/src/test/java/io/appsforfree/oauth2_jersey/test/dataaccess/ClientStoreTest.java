@@ -28,7 +28,7 @@ public class ClientStoreTest extends DBTestCase
 	{
 		// TODO Auto-generated method stub
 		return new FlatXmlDataSetBuilder()
-				.build(new FileInputStream("src/test/resources/client.xml"));
+				.build(getClass().getClassLoader().getResourceAsStream("client.xml"));
 	}
 	
 	@Override

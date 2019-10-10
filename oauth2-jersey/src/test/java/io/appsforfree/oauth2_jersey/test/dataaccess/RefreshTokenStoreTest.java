@@ -27,7 +27,7 @@ public class RefreshTokenStoreTest extends DBTestCase
 	protected IDataSet getDataSet() throws Exception 
 	{
 		// TODO Auto-generated method stub
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/refreshToken.xml"));
+		return new FlatXmlDataSetBuilder().build(getClass().getClassLoader().getResourceAsStream("refreshToken.xml"));
 	}
 	
 	@Override

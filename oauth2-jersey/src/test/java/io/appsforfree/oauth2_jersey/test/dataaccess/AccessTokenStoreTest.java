@@ -27,7 +27,7 @@ public class AccessTokenStoreTest extends DBTestCase
 	protected IDataSet getDataSet() throws Exception 
 	{
 		// TODO Auto-generated method stub
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/accessToken.xml"));
+		return new FlatXmlDataSetBuilder().build(getClass().getClassLoader().getResourceAsStream("accessToken.xml"));
 	}
 	
 	@Override
