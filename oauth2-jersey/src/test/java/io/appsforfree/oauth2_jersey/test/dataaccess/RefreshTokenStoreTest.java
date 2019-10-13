@@ -1,6 +1,8 @@
 package io.appsforfree.oauth2_jersey.test.dataaccess;
 
 import java.io.FileInputStream;
+import java.time.Instant;
+import java.util.Date;
 
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
@@ -91,6 +93,28 @@ public class RefreshTokenStoreTest extends DBTestCase
 	}
 	
 	@Test
+	public void testGetRefreshToken_refreshTokenExists_issuedAtEquals1234567()
+	{
+		assertEquals(
+				RefreshTokenStore
+					.getInstance()
+					.getRefreshToken("abcdefghijklmnopqrstuvwxyz")
+					.getIssuedAt(), 
+				Instant.parse("2019-10-13T20:21:00Z"));
+	}
+	
+	@Test
+	public void testGetRefreshToken_refreshTokenExists_expiresOnEquals12345678()
+	{
+		assertEquals(
+				RefreshTokenStore
+					.getInstance()
+					.getRefreshToken("abcdefghijklmnopqrstuvwxyz")
+					.getExpiresOn(), 
+				Instant.parse("2019-10-13T20:22:00Z"));
+	}
+	
+	@Test
 	public void testGetRefreshToken_refreshTokenExists_usernameEqualsMyUsername()
 	{
 		assertEquals(
@@ -106,7 +130,9 @@ public class RefreshTokenStoreTest extends DBTestCase
 	{
 		RefreshToken refreshToken = new RefreshToken(
 				"newRefreshToken", 
-				"54321", 
+				"54321",
+				Instant.parse("2019-10-13T22:24:00Z"),
+				Instant.parse("2019-10-13T22:25:00Z"),
 				"myUsername");
 		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
 		assertNull(RefreshTokenStore.getInstance().getRefreshToken("newRefreshToken"));
@@ -118,6 +144,8 @@ public class RefreshTokenStoreTest extends DBTestCase
 		RefreshToken refreshToken = new RefreshToken(
 				"newRefreshToken", 
 				"12345", 
+				Instant.parse("2019-10-13T22:24:00Z"),
+				Instant.parse("2019-10-13T22:25:00Z"),
 				"invalidUsername");
 		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
 		assertNull(RefreshTokenStore.getInstance().getRefreshToken("newRefreshToken"));
@@ -129,6 +157,8 @@ public class RefreshTokenStoreTest extends DBTestCase
 		RefreshToken refreshToken = new RefreshToken(
 				"newRefreshToken", 
 				"12345", 
+				Instant.parse("2019-10-13T22:24:00Z"),
+				Instant.parse("2019-10-13T22:25:00Z"),
 				"myUsername");
 		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
 		assertNotNull(RefreshTokenStore.getInstance().getRefreshToken("newRefreshToken"));
@@ -140,6 +170,8 @@ public class RefreshTokenStoreTest extends DBTestCase
 		RefreshToken refreshToken = new RefreshToken(
 				"newRefreshToken", 
 				"12345", 
+				Instant.ofEpochSecond(123456789),
+				Instant.ofEpochSecond(987654321),
 				"myUsername");
 		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
 		assertEquals(
@@ -156,6 +188,8 @@ public class RefreshTokenStoreTest extends DBTestCase
 		RefreshToken refreshToken = new RefreshToken(
 				"newRefreshToken", 
 				"12345", 
+				Instant.parse("2019-10-13T22:24:00Z"),
+				Instant.parse("2019-10-13T22:25:00Z"),
 				"myUsername");
 		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
 		assertEquals(
@@ -172,6 +206,8 @@ public class RefreshTokenStoreTest extends DBTestCase
 		RefreshToken refreshToken = new RefreshToken(
 				"newRefreshToken", 
 				"12345", 
+				Instant.parse("2019-10-13T22:24:00Z"),
+				Instant.parse("2019-10-13T22:25:00Z"),
 				"myUsername");
 		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
 		assertEquals(
@@ -180,6 +216,42 @@ public class RefreshTokenStoreTest extends DBTestCase
 					.getRefreshToken("newRefreshToken")
 					.getUsername(), 
 				"myUsername");
+	}
+	
+	@Test
+	public void testSaveRefreshToken_validClientIdAndValidUsername_issuedAtEquals123456789()
+	{
+		RefreshToken refreshToken = new RefreshToken(
+				"newRefreshToken", 
+				"12345", 
+				Instant.ofEpochSecond(123456789),
+				Instant.ofEpochSecond(987654321),
+				"myUsername");
+		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
+		assertEquals(
+				RefreshTokenStore
+					.getInstance()
+					.getRefreshToken("newRefreshToken")
+					.getIssuedAt(), 
+				Instant.ofEpochSecond(123456789));
+	}
+	
+	@Test
+	public void testSaveRefreshToken_validClientIdAndValidUsername_expiresOnEquals987654321()
+	{
+		RefreshToken refreshToken = new RefreshToken(
+				"newRefreshToken", 
+				"12345", 
+				Instant.ofEpochSecond(123456789),
+				Instant.ofEpochSecond(987654321),
+				"myUsername");
+		RefreshTokenStore.getInstance().saveRefreshToken(refreshToken);
+		assertEquals(
+				RefreshTokenStore
+					.getInstance()
+					.getRefreshToken("newRefreshToken")
+					.getExpiresOn(), 
+				Instant.ofEpochSecond(987654321));
 	}
 	
 	@Test

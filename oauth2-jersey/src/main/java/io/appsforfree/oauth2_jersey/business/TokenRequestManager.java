@@ -5,9 +5,11 @@ import java.util.List;
 import io.appsforfree.oauth2_jersey.dataaccess.AccessTokenStore;
 import io.appsforfree.oauth2_jersey.dataaccess.ClientStore;
 import io.appsforfree.oauth2_jersey.dataaccess.GrantTypeStore;
+import io.appsforfree.oauth2_jersey.dataaccess.RefreshTokenStore;
 import io.appsforfree.oauth2_jersey.dataaccess.ScopeStore;
 import io.appsforfree.oauth2_jersey.domain.AccessToken;
 import io.appsforfree.oauth2_jersey.domain.Client;
+import io.appsforfree.oauth2_jersey.domain.RefreshToken;
 import io.appsforfree.oauth2_jersey.domain.TokenResponse;
 import io.appsforfree.oauth2_jersey.domain.exception.ErrorResponseException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidClientException;
@@ -24,6 +26,7 @@ public class TokenRequestManager
 	private GrantTypeStore grantTypeStore = GrantTypeStore.getInstance();
 	private ScopeStore scopeStore = ScopeStore.getInstance();
 	private AccessTokenStore accessTokenStore = AccessTokenStore.getInstance();
+	private RefreshTokenStore refreshTokenStore = RefreshTokenStore.getInstance();
 	
 	public static TokenRequestManager getInstance() { return tokenRequestManager; }
 	
@@ -37,9 +40,15 @@ public class TokenRequestManager
 		
 		checkValidScopes(tokenRequest);
 		
-		AccessToken accessToken = TokenHelper.createAccessToken(
+		RefreshToken refreshToken = TokenHelper.createRefreshToken(
 				tokenRequest.getClientId(), 
 				"myUsername");
+		refreshTokenStore.saveRefreshToken(refreshToken);
+		
+		AccessToken accessToken = TokenHelper.createAccessToken(
+				tokenRequest.getClientId(), 
+				"myUsername", 
+				refreshToken.getRefreshToken());
 		accessTokenStore.saveAccessToken(accessToken);
 		return new TokenResponse(accessToken);
 	}

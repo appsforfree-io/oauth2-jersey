@@ -56,24 +56,6 @@ public class TokenResourceTest extends JerseyTest
 	}
 	
 	@Test
-	public void testHandleTokenRequest_invalidClientId_statusEquals400()
-	{
-		MultivaluedMap<String, String> tokenBody = new MultivaluedHashMap<String,String>();
-		
-		tokenBody.add("grant_type", "password");
-		tokenBody.add("username", "123456");
-		tokenBody.add("password", "654321");
-		Entity<MultivaluedMap> entity = Entity.entity(
-				tokenBody, 
-				MediaType.APPLICATION_FORM_URLENCODED);
-		Response response = target("/token")
-				.request()
-				.header("Authorization", "Basic MTlzNDU6Njc4OTA=")
-				.post(entity);
-		assertEquals(response.getStatus(), 400);
-	}
-	
-	@Test
 	public void testHandleTokenRequest_invalidClientId_errorEqualsInvalidClient()
 	{
 		MultivaluedMap<String, String> tokenBody = new MultivaluedHashMap<String,String>();
@@ -90,61 +72,5 @@ public class TokenResourceTest extends JerseyTest
 				.post(entity);
 		ErrorResponse errorResponse = response.readEntity(ErrorResponse.class);
 		assertEquals(errorResponse.getError(), "invalid_client");
-	}
-	
-	@Test
-	public void testHandleTokenRequest_validParameters_statusEquals200()
-	{
-		MultivaluedMap<String, String> tokenBody = new MultivaluedHashMap<String,String>();
-		
-		tokenBody.add("grant_type", "password");
-		tokenBody.add("username", "123456");
-		tokenBody.add("password", "654321");
-		Entity<MultivaluedMap> entity = Entity.entity(
-				tokenBody, 
-				MediaType.APPLICATION_FORM_URLENCODED);
-		Response response = target("/token")
-				.request()
-				.header("Authorization", "Basic MTExMTE6MjlyMjl=")
-				.post(entity);
-		assertEquals(response.getStatus(), 200);
-	}
-	
-	@Test
-	public void testHandleTokenRequest_validParameters_accessTokenEquals123456()
-	{
-		MultivaluedMap<String, String> tokenBody = new MultivaluedHashMap<String,String>();
-		
-		tokenBody.add("grant_type", "password");
-		tokenBody.add("username", "123456");
-		tokenBody.add("password", "654321");
-		Entity<MultivaluedMap> entity = Entity.entity(
-				tokenBody, 
-				MediaType.APPLICATION_FORM_URLENCODED);
-		Response response = target("/token")
-				.request()
-				.header("Authorization", "Basic MTExMTE6MjlyMjl=")
-				.post(entity);
-		TokenResponse tokenResponse = response.readEntity(TokenResponse.class);
-		assertEquals(tokenResponse.getAccessToken(), "123456");
-	}
-	
-	@Test
-	public void testHandleTokenRequest_validParameters_tokenTypeEqualsBearer()
-	{
-		MultivaluedMap<String, String> tokenBody = new MultivaluedHashMap<String,String>();
-		
-		tokenBody.add("grant_type", "password");
-		tokenBody.add("username", "123456");
-		tokenBody.add("password", "654321");
-		Entity<MultivaluedMap> entity = Entity.entity(
-				tokenBody, 
-				MediaType.APPLICATION_FORM_URLENCODED);
-		Response response = target("/token")
-				.request()
-				.header("Authorization", "Basic MTExMTE6MjlyMjl=")
-				.post(entity);
-		TokenResponse tokenResponse = response.readEntity(TokenResponse.class);
-		assertEquals(tokenResponse.getTokenType(), "Bearer");
 	}
 }
