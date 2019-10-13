@@ -2,12 +2,13 @@ package io.appsforfree.oauth2_jersey.business;
 
 import java.util.List;
 
+import io.appsforfree.oauth2_jersey.dataaccess.AccessTokenStore;
 import io.appsforfree.oauth2_jersey.dataaccess.ClientStore;
 import io.appsforfree.oauth2_jersey.dataaccess.GrantTypeStore;
 import io.appsforfree.oauth2_jersey.dataaccess.ScopeStore;
+import io.appsforfree.oauth2_jersey.domain.AccessToken;
 import io.appsforfree.oauth2_jersey.domain.Client;
 import io.appsforfree.oauth2_jersey.domain.TokenResponse;
-import io.appsforfree.oauth2_jersey.domain.TokenType;
 import io.appsforfree.oauth2_jersey.domain.exception.ErrorResponseException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidClientException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidRequestException;
@@ -22,6 +23,7 @@ public class TokenRequestManager
 	private ClientStore clientStore = ClientStore.getInstance();
 	private GrantTypeStore grantTypeStore = GrantTypeStore.getInstance();
 	private ScopeStore scopeStore = ScopeStore.getInstance();
+	private AccessTokenStore accessTokenStore = AccessTokenStore.getInstance();
 	
 	public static TokenRequestManager getInstance() { return tokenRequestManager; }
 	
@@ -35,7 +37,11 @@ public class TokenRequestManager
 		
 		checkValidScopes(tokenRequest);
 		
-		return new TokenResponse("123456", TokenType.BEARER);
+		AccessToken accessToken = TokenHelper.createAccessToken(
+				tokenRequest.getClientId(), 
+				"myUsername");
+		accessTokenStore.saveAccessToken(accessToken);
+		return new TokenResponse(accessToken);
 	}
 	
 	private void checkRequest(TokenRequest tokenRequest) throws InvalidRequestException

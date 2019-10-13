@@ -154,20 +154,6 @@ public class TokenRequestManagerTest extends DBTestCase
 	}
 	
 	@Test
-	public void test_generateAccessToken_validTokenRequest_accessTokenEquals123456() throws Exception
-	{
-		TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-				"myUsername", 
-				"myPassword", 
-				"12345", 
-				"54321", 
-				"profile");
-		assertEquals(
-				TokenRequestManager.getInstance().generateAccessToken(passwordTokenRequest).getAccessToken(),
-				"123456");
-	}
-	
-	@Test
 	public void test_generateAccessToken_validTokenRequest_tokenTypeEqualsBearer() throws Exception
 	{
 		TokenRequest passwordTokenRequest = new PasswordTokenRequest(

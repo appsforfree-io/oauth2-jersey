@@ -21,6 +21,12 @@ public class TokenResponse
 	
 	public TokenResponse() {}
 	
+	public TokenResponse(AccessToken accessToken)
+	{
+		this.accessToken = accessToken.getAccessToken();
+		this.tokenType = getTokenType(TokenType.BEARER);
+	}
+	
 	public TokenResponse(
 			String accessToken, 
 			TokenType tokenType)

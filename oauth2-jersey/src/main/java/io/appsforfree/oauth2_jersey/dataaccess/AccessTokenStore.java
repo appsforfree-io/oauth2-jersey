@@ -82,7 +82,9 @@ public class AccessTokenStore
                 String refreshToken = rs.getString(4);
                 at = new AccessToken(
                 		accessToken, 
-                		clientId, 
+                		clientId,
+                		null, 
+                		null,
                 		username,
                 		refreshToken);
                 break;

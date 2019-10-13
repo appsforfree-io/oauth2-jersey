@@ -118,6 +118,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"54321", 
+				null,
+				null,
 				"myUsername", 
 				"abcdefghijklmnopqrtsuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -133,6 +135,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345", 
+				null,
+				null,
 				"invalidUsername", 
 				"abcdefghijklmnopqrtsuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -147,7 +151,9 @@ public class AccessTokenStoreTest extends DBTestCase
 	{
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
-				"12345", 
+				"12345",
+				null,
+				null,
 				"myUsername", 
 				"invalidRefreshToken");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -162,7 +168,9 @@ public class AccessTokenStoreTest extends DBTestCase
 	{
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
-				"12345", 
+				"12345",
+				null,
+				null,
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -178,6 +186,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345", 
+				null,
+				null,
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -194,7 +204,9 @@ public class AccessTokenStoreTest extends DBTestCase
 	{
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
-				"12345", 
+				"12345",
+				null,
+				null,
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -212,6 +224,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345", 
+				null,
+				null,
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -229,6 +243,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345", 
+				null,
+				null,
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
