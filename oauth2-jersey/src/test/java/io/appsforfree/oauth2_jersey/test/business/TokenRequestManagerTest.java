@@ -17,6 +17,7 @@ import io.appsforfree.oauth2_jersey.domain.request.PasswordTokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.TokenRequest;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidClientException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidRequestException;
+import io.appsforfree.oauth2_jersey.domain.exception.InvalidScopeException;
 import io.appsforfree.oauth2_jersey.domain.exception.UnauthorizedClientException;
 
 public class TokenRequestManagerTest extends DBTestCase
@@ -113,7 +114,7 @@ public class TokenRequestManagerTest extends DBTestCase
 	}
 	
 	@Test
-	public void test_generateAccessToken_clientDoesntSupportPasswordGrantType_throwInvalidClientException() throws Exception
+	public void test_generateAccessToken_clientDoesntSupportPasswordGrantType_throwUnauthorizedClientException() throws Exception
 	{
 		assertThrows(UnauthorizedClientException.class, () -> {
 			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
@@ -122,6 +123,20 @@ public class TokenRequestManagerTest extends DBTestCase
 					"123456", 
 					"654321", 
 					"profile");
+			TokenRequestManager.getInstance().generateAccessToken(passwordTokenRequest);
+		});
+	}
+	
+	@Test
+	public void test_generateAccessToken_clientDoesntSupportScope1_throwInvalidScopeException() throws Exception
+	{
+		assertThrows(InvalidScopeException.class, () -> {
+			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
+					"myUsername", 
+					"myPassword", 
+					"12345", 
+					"54321", 
+					"scope1");
 			TokenRequestManager.getInstance().generateAccessToken(passwordTokenRequest);
 		});
 	}
