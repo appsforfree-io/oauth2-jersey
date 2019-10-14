@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Scope scope='profile' />
+	<Client client_id='12345' client_secret='54321' client_type='confidential' />
+	<SupportedGrantType client_id='12345' grant_type='password' />
+	<Client client_id='123456' client_secret='654321' client_type='public' />
+	<SupportedGrantType client_id='123456' grant_type='client_credentials' />
+	<ValidScope client_id='12345' scope='profile' />
+	<User username='myUsername' password='myPassword' />
+    <RefreshToken refresh_token='abcdefghijklmnopqrstuvwxyz' client_id='12345' issued_at='2019-10-13 22:21:00.000000000' expires_on='2019-10-13 22:22:00.000000000' username='myUsername' />
+    <AccessToken access_token="accessTokenWithRefreshToken" refresh_token='abcdefghijklmnopqrstuvwxyz' client_id='12345' issued_at='2019-10-13 09:52:00.000000000' expires_on='2019-10-14 10:52:00.000000000' username='myUsername' />
+    <AccessToken access_token="accessTokenWithoutRefreshToken" client_id='12345' username='myUsername' />
+</dataset>

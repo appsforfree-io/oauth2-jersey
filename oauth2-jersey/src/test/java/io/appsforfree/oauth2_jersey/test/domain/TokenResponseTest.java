@@ -6,13 +6,14 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import io.appsforfree.oauth2_jersey.domain.TokenResponse;
+import io.appsforfree.oauth2_jersey.domain.TokenType;
 
 public class TokenResponseTest 
 {
 	@Test
 	public void test_accessTokenIsNotNull()
 	{
-		TokenResponse accessToken = new TokenResponse("123456", "bearer");
+		TokenResponse accessToken = new TokenResponse("123456", TokenType.BEARER);
 		
 		assertNotNull(accessToken.getAccessToken());
 	}
@@ -20,7 +21,7 @@ public class TokenResponseTest
 	@Test
 	public void test_tokenTypeIsNotNull()
 	{
-		TokenResponse accessToken = new TokenResponse("123456", "bearer");
+		TokenResponse accessToken = new TokenResponse("123456", TokenType.BEARER);
 		
 		assertNotNull(accessToken.getTokenType());
 	}
@@ -28,7 +29,7 @@ public class TokenResponseTest
 	@Test
 	public void test_accessTokenEquals123456()
 	{
-		TokenResponse accessToken = new TokenResponse("123456", "bearer");
+		TokenResponse accessToken = new TokenResponse("123456", TokenType.BEARER);
 		
 		assertEquals(accessToken.getAccessToken(), "123456");
 	}
@@ -36,15 +37,15 @@ public class TokenResponseTest
 	@Test
 	public void test_tokenTypeEqualsBearer()
 	{
-		TokenResponse accessToken = new TokenResponse("123456", "bearer");
+		TokenResponse accessToken = new TokenResponse("123456", TokenType.BEARER);
 		
-		assertEquals(accessToken.getTokenType(), "bearer");
+		assertEquals(accessToken.getTokenType(), "Bearer");
 	}
 	
 	@Test
 	public void test_expiresInEquals12345678()
 	{
-		TokenResponse accessToken = new TokenResponse("123456", "bearer", 12345678, "654321", "profile");
+		TokenResponse accessToken = new TokenResponse("123456", TokenType.BEARER, 12345678, "654321", "profile");
 		
 		assertEquals(accessToken.getExpiresIn(), 12345678);
 	}
@@ -52,7 +53,7 @@ public class TokenResponseTest
 	@Test
 	public void test_refreshTokenEquals654321()
 	{
-		TokenResponse accessToken = new TokenResponse("123456", "bearer", 12345678, "654321", "profile");
+		TokenResponse accessToken = new TokenResponse("123456", TokenType.BEARER, 12345678, "654321", "profile");
 		
 		assertEquals(accessToken.getRefreshToken(), "654321");
 	}
@@ -60,7 +61,7 @@ public class TokenResponseTest
 	@Test
 	public void test_scopeEqualsProfile()
 	{
-		TokenResponse accessToken = new TokenResponse("123456", "bearer", 12345678, "654321", "profile");
+		TokenResponse accessToken = new TokenResponse("123456", TokenType.BEARER, 12345678, "654321", "profile");
 		
 		assertEquals(accessToken.getScope(), "profile");
 	}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Scope scope='scope1' />
+	<Scope scope='scope2' />
+	<Scope scope='scope3' />
+	<Client client_id='12345' client_secret='54321' client_type='confidential' />
+	<ValidScope client_id='12345' scope='scope1' />
+	<ValidScope client_id='12345' scope='scope2' />
+</dataset>

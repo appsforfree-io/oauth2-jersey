@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Client client_id='12345' client_secret='54321' client_type='confidential' />
+	<User username='myUsername' password='myPassword' />
+    <RefreshToken refresh_token='abcdefghijklmnopqrstuvwxyz' client_id='12345' issued_at='2019-10-13 22:21:00.000000000' expires_on='2019-10-13 22:22:00.000000000' username='myUsername' />
+</dataset>
