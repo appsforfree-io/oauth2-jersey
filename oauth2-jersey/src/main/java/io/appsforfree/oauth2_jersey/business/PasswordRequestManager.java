@@ -39,7 +39,7 @@ public class PasswordRequestManager extends TokenRequestManager
 		
 		AccessToken accessToken = TokenHelper.createAccessToken(
 				tokenRequest.getClientId(), 
-				"myUsername", 
+				passwordTokenRequest.getUsername(), 
 				refreshToken.getRefreshToken());
 		accessTokenStore.saveAccessToken(accessToken);
 		return accessToken;

@@ -63,6 +63,15 @@ public class TokenRequestFactoryTest
 	}
 	
 	@Test
+	public void test_createRequest_validParams_grantTypeEqualsRefreshToken()
+	{
+		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
+		map.add("grant_type", "refresh_token");
+		map.add("refresh_token", "1234567890");
+		assertEquals(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==").getGrantType(), GrantType.REFRESHTOKEN);
+	}
+	
+	@Test
 	public void test_createRequest_validParams_clientIdEquals123456()
 	{
 		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();

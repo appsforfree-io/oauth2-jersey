@@ -11,19 +11,18 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.jupiter.api.Test;
 
-import io.appsforfree.oauth2_jersey.business.PasswordRequestManager;
-import io.appsforfree.oauth2_jersey.business.TokenRequestManager;
+import io.appsforfree.oauth2_jersey.business.RefreshTokenRequestManager;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidClientException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidGrantException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidRequestException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidScopeException;
 import io.appsforfree.oauth2_jersey.domain.exception.UnauthorizedClientException;
-import io.appsforfree.oauth2_jersey.domain.request.PasswordTokenRequest;
+import io.appsforfree.oauth2_jersey.domain.request.RefreshTokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.TokenRequest;
 
-public class PasswordRequestManagerTest extends DBTestCase 
+public class RefreshTokenRequestManagerTest extends DBTestCase
 {
-	public PasswordRequestManagerTest(String name)
+	public RefreshTokenRequestManagerTest(String name)
 	{
 		super(name);
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.mysql.jdbc.Driver");
@@ -52,16 +51,16 @@ public class PasswordRequestManagerTest extends DBTestCase
     }
 	
 	@Test
-	public void testGetInstance_returnNotNull()
+	public void testGetInstance_returnsNotNull()
 	{
-		assertNotNull(PasswordRequestManager.getInstance());
+		assertNotNull(RefreshTokenRequestManager.getInstance());
 	}
 	
 	@Test
-	public void testGetInstance_returnSameInstance()
+	public void testGetInstance_returnsSameInstance()
 	{
-		TokenRequestManager instance1 = PasswordRequestManager.getInstance();
-		TokenRequestManager instance2 = PasswordRequestManager.getInstance();
+		RefreshTokenRequestManager instance1 = RefreshTokenRequestManager.getInstance();
+		RefreshTokenRequestManager instance2 = RefreshTokenRequestManager.getInstance();
 		assertEquals(instance1, instance2);
 	}
 	
@@ -69,7 +68,7 @@ public class PasswordRequestManagerTest extends DBTestCase
 	public void testHandleTokenRequest_tokenRequestIsNull_throwInvalidRequestException() throws Exception
 	{
 		assertThrows(InvalidRequestException.class, () -> {
-			PasswordRequestManager.getInstance().handleTokenRequest(null);
+			RefreshTokenRequestManager.getInstance().handleTokenRequest(null);
 		});
 	}
 	
@@ -77,13 +76,12 @@ public class PasswordRequestManagerTest extends DBTestCase
 	public void testHandleTokenRequest_invalidTokenRequest_throwInvalidRequestException() throws Exception
 	{
 		assertThrows(InvalidRequestException.class, () -> {
-			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-					null, 
+			TokenRequest refreshTokenRequest = new RefreshTokenRequest(
 					null, 
 					null, 
 					null, 
 					null);
-			PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest);
+			RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest);
 		});
 	}
 	
@@ -91,13 +89,12 @@ public class PasswordRequestManagerTest extends DBTestCase
 	public void testHandleTokenRequest_invalidClientId_throwInvalidClientException() throws Exception
 	{
 		assertThrows(InvalidClientException.class, () -> {
-			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-					"myUsername", 
-					"myPassword", 
+			TokenRequest refreshTokenRequest = new RefreshTokenRequest(
+					"1234567890",  
 					"123456", 
 					"54321", 
 					"profile");
-			PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest);
+			RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest);
 		});
 	}
 	
@@ -105,13 +102,12 @@ public class PasswordRequestManagerTest extends DBTestCase
 	public void testHandleTokenRequest_invalidClientSecret_throwInvalidClientException() throws Exception
 	{
 		assertThrows(InvalidClientException.class, () -> {
-			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-					"myUsername", 
-					"myPassword", 
+			TokenRequest refreshTokenRequest = new RefreshTokenRequest(
+					"1234567890", 
 					"12345", 
 					"543210", 
 					"profile");
-			PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest);
+			RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest);
 		});
 	}
 	
@@ -119,13 +115,12 @@ public class PasswordRequestManagerTest extends DBTestCase
 	public void testHandleTokenRequest_clientDoesntSupportPasswordGrantType_throwUnauthorizedClientException() throws Exception
 	{
 		assertThrows(UnauthorizedClientException.class, () -> {
-			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-					"myUsername", 
-					"myPassword", 
+			TokenRequest refreshTokenRequest = new RefreshTokenRequest(
+					"1234567890", 
 					"123456", 
 					"654321", 
 					"profile");
-			PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest);
+			RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest);
 		});
 	}
 	
@@ -133,67 +128,49 @@ public class PasswordRequestManagerTest extends DBTestCase
 	public void testHandleTokenRequest_clientDoesntSupportScope1_throwInvalidScopeException() throws Exception
 	{
 		assertThrows(InvalidScopeException.class, () -> {
-			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-					"myUsername", 
-					"myPassword", 
+			TokenRequest refreshTokenRequest = new RefreshTokenRequest(
+					"1234567890", 
 					"12345", 
 					"54321", 
 					"scope1");
-			PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest);
+			RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest);
 		});
 	}
 	
 	@Test
-	public void testHandleTokenRequest_usernameDoesntExist_throwInvalidGrantException() throws Exception
+	public void testHandleTokenRequest_refreshTokenDoesntExist_throwInvalidGrantException() throws Exception
 	{
 		assertThrows(InvalidGrantException.class, () -> {
-			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-					"myInvalidUsername", 
-					"myPassword", 
+			TokenRequest refreshTokenRequest = new RefreshTokenRequest(
+					"1234567890",
 					"12345", 
 					"54321", 
 					"profile");
-			PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest);
-		});
-	}
-	
-	@Test
-	public void testHandleTokenRequest_invalidPassword_throwInvalidGrantException() throws Exception
-	{
-		assertThrows(InvalidGrantException.class, () -> {
-			TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-					"myUsername", 
-					"myInvalidPassword", 
-					"12345", 
-					"54321", 
-					"profile");
-			PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest);
+			RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest);
 		});
 	}
 	
 	@Test
 	public void testHandleTokenRequest_validTokenRequest_returnNotNull() throws Exception
 	{
-		TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-				"myUsername", 
-				"myPassword", 
+		TokenRequest refreshTokenRequest = new RefreshTokenRequest(
+				"abcdefghijklmnopqrstuvwxyz", 
 				"12345", 
 				"54321", 
 				"profile");
-		assertNotNull(PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest));
+		assertNotNull(RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest));
 	}
 	
 	@Test
 	public void testHandleTokenRequest_validTokenRequest_tokenTypeEqualsBearer() throws Exception
 	{
-		TokenRequest passwordTokenRequest = new PasswordTokenRequest(
-				"myUsername", 
-				"myPassword", 
+		TokenRequest refreshTokenRequest = new RefreshTokenRequest(
+				"abcdefghijklmnopqrstuvwxyz", 
 				"12345", 
 				"54321", 
 				"profile");
 		assertEquals(
-				PasswordRequestManager.getInstance().handleTokenRequest(passwordTokenRequest).getTokenType(),
+				RefreshTokenRequestManager.getInstance().handleTokenRequest(refreshTokenRequest).getTokenType(),
 				"Bearer");
 	}
 }

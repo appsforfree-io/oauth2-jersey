@@ -1,6 +1,5 @@
 package io.appsforfree.oauth2_jersey.dataaccess;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;

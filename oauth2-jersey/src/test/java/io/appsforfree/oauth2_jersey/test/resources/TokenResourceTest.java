@@ -5,7 +5,6 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
 
 import io.appsforfree.oauth2_jersey.domain.ErrorResponse;
-import io.appsforfree.oauth2_jersey.domain.TokenResponse;
 import io.appsforfree.oauth2_jersey.resources.TokenResource;
 
 import static org.junit.Assert.assertEquals;

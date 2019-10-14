@@ -10,7 +10,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import io.appsforfree.oauth2_jersey.business.TokenRequestHandler;
-import io.appsforfree.oauth2_jersey.business.TokenRequestManager;
 import io.appsforfree.oauth2_jersey.domain.ErrorResponse;
 import io.appsforfree.oauth2_jersey.domain.TokenResponse;
 import io.appsforfree.oauth2_jersey.domain.exception.ErrorResponseException;

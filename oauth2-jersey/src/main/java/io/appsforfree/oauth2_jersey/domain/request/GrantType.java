@@ -2,7 +2,8 @@ package io.appsforfree.oauth2_jersey.domain.request;
 
 public enum GrantType 
 {
-	PASSWORD("password");
+	PASSWORD("password"),
+	REFRESHTOKEN("refresh_token");
 	
 	private String name;
 	
