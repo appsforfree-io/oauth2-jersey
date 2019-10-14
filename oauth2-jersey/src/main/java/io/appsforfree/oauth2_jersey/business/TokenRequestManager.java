@@ -18,19 +18,13 @@ import io.appsforfree.oauth2_jersey.domain.exception.InvalidScopeException;
 import io.appsforfree.oauth2_jersey.domain.exception.UnauthorizedClientException;
 import io.appsforfree.oauth2_jersey.domain.request.TokenRequest;
 
-public class TokenRequestManager 
+public abstract class TokenRequestManager 
 {
-	private static TokenRequestManager tokenRequestManager = new TokenRequestManager();
-	
 	private ClientStore clientStore = ClientStore.getInstance();
 	private GrantTypeStore grantTypeStore = GrantTypeStore.getInstance();
 	private ScopeStore scopeStore = ScopeStore.getInstance();
-	private AccessTokenStore accessTokenStore = AccessTokenStore.getInstance();
-	private RefreshTokenStore refreshTokenStore = RefreshTokenStore.getInstance();
 	
-	public static TokenRequestManager getInstance() { return tokenRequestManager; }
-	
-	public TokenResponse generateAccessToken(TokenRequest tokenRequest) throws ErrorResponseException
+	public TokenResponse handleTokenRequest(TokenRequest tokenRequest) throws ErrorResponseException
 	{
 		checkRequest(tokenRequest);
 		
@@ -40,18 +34,12 @@ public class TokenRequestManager
 		
 		checkValidScopes(tokenRequest);
 		
-		RefreshToken refreshToken = TokenHelper.createRefreshToken(
-				tokenRequest.getClientId(), 
-				"myUsername");
-		refreshTokenStore.saveRefreshToken(refreshToken);
+		AccessToken accessToken = createAccessToken(tokenRequest);
 		
-		AccessToken accessToken = TokenHelper.createAccessToken(
-				tokenRequest.getClientId(), 
-				"myUsername", 
-				refreshToken.getRefreshToken());
-		accessTokenStore.saveAccessToken(accessToken);
 		return new TokenResponse(accessToken);
 	}
+	
+	public abstract AccessToken createAccessToken(TokenRequest tokenRequest) throws ErrorResponseException;
 	
 	private void checkRequest(TokenRequest tokenRequest) throws InvalidRequestException
 	{

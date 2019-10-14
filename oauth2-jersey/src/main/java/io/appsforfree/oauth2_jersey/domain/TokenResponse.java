@@ -55,10 +55,8 @@ public class TokenResponse
 		{
 			case BASIC:
 				return "Basic";
-			case BEARER:
-				return "Bearer";
 			default:
-				return null;
+				return "Bearer";
 		}
 	}
 	

@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import io.appsforfree.oauth2_jersey.business.TokenRequestHandler;
 import io.appsforfree.oauth2_jersey.business.TokenRequestManager;
 import io.appsforfree.oauth2_jersey.domain.ErrorResponse;
 import io.appsforfree.oauth2_jersey.domain.TokenResponse;
@@ -29,9 +30,7 @@ public class TokenResource
 		try
 		{
 			TokenRequest tokenRequest = TokenRequestFactory.createRequest(body, authorization);
-			TokenResponse tokenResponse = TokenRequestManager
-					.getInstance()
-					.generateAccessToken(tokenRequest);
+			TokenResponse tokenResponse = TokenRequestHandler.handleTokenRequest(tokenRequest);
 			if (tokenResponse == null)
 				return Response.status(400).build();
 			return Response.ok().entity(tokenResponse).build();

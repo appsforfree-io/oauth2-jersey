@@ -5,7 +5,6 @@ import io.appsforfree.oauth2_jersey.domain.RefreshToken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
-import java.nio.charset.Charset;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
