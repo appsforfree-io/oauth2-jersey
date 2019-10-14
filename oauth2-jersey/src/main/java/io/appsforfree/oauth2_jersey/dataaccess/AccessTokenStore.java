@@ -4,6 +4,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 import io.appsforfree.oauth2_jersey.domain.AccessToken;
 
@@ -22,11 +24,13 @@ public class AccessTokenStore
         try 
         {
             connection = this.databaseManager.getConnection();
-            callableStatement = connection.prepareCall("{call SaveAccessToken(?, ?, ?, ?)}");
+            callableStatement = connection.prepareCall("{call SaveAccessToken(?, ?, ?, ?, ?, ?)}");
             callableStatement.setString(1, accessToken.getAccessToken());
             callableStatement.setString(2, accessToken.getClientId());
-            callableStatement.setString(3, accessToken.getUsername());
-            callableStatement.setString(4, accessToken.getRefreshToken());
+            callableStatement.setTimestamp(3, Timestamp.from(accessToken.getIssuedAt()));
+            callableStatement.setTimestamp(4, Timestamp.from(accessToken.getExpiresOn()));
+            callableStatement.setString(5, accessToken.getUsername());
+            callableStatement.setString(6, accessToken.getRefreshToken());
             callableStatement.execute();
         }
         catch (SQLException e) 
@@ -78,13 +82,15 @@ public class AccessTokenStore
             while (rs.next()) 
             {
                 String clientId = rs.getString(2);
-                String username = rs.getString(3);
-                String refreshToken = rs.getString(4);
+                Instant issuedAt = rs.getTimestamp(3).toInstant();
+                Instant expiresOn = rs.getTimestamp(4).toInstant();
+                String username = rs.getString(5);
+                String refreshToken = rs.getString(6);
                 at = new AccessToken(
                 		accessToken, 
                 		clientId,
-                		null, 
-                		null,
+                		issuedAt, 
+                		expiresOn,
                 		username,
                 		refreshToken);
                 break;

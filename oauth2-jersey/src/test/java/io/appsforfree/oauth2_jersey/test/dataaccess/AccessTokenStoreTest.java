@@ -1,6 +1,7 @@
 package io.appsforfree.oauth2_jersey.test.dataaccess;
 
 import java.io.FileInputStream;
+import java.time.Instant;
 
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
@@ -118,8 +119,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"54321", 
-				null,
-				null,
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"myUsername", 
 				"abcdefghijklmnopqrtsuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -135,8 +136,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345", 
-				null,
-				null,
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"invalidUsername", 
 				"abcdefghijklmnopqrtsuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -152,8 +153,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345",
-				null,
-				null,
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"myUsername", 
 				"invalidRefreshToken");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -169,8 +170,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345",
-				null,
-				null,
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -185,9 +186,9 @@ public class AccessTokenStoreTest extends DBTestCase
 	{
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
-				"12345", 
-				null,
-				null,
+				"12345",
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -205,8 +206,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345",
-				null,
-				null,
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -223,9 +224,9 @@ public class AccessTokenStoreTest extends DBTestCase
 	{
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
-				"12345", 
-				null,
-				null,
+				"12345",
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);
@@ -243,8 +244,8 @@ public class AccessTokenStoreTest extends DBTestCase
 		AccessToken accessToken = new AccessToken(
 				"newAccessToken", 
 				"12345", 
-				null,
-				null,
+				Instant.parse("2019-10-14T07:53:00Z"),
+				Instant.parse("2019-10-14T08:53:00Z"),
 				"myUsername", 
 				"abcdefghijklmnopqrstuvwxyz");
 		AccessTokenStore.getInstance().saveAccessToken(accessToken);

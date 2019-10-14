@@ -1,21 +1,21 @@
 package io.appsforfree.oauth2_jersey.domain;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class AccessToken 
 {
 	private String accessToken;
 	private String clientId;
-	private Date issuedAt;
-	private Date expiresOn;
+	private Instant issuedAt;
+	private Instant expiresOn;
 	private String username;
 	private String refreshToken;
 	
 	public AccessToken(
 			String accessToken, 
 			String clientId, 
-			Date issuedAt,
-			Date expiresOn)
+			Instant issuedAt,
+			Instant expiresOn)
 	{
 		this.accessToken = accessToken;
 		this.clientId = clientId;
@@ -26,8 +26,8 @@ public class AccessToken
 	public AccessToken(
 			String accessToken, 
 			String clientId, 
-			Date issuedAt,
-			Date expiresOn, 
+			Instant issuedAt,
+			Instant expiresOn, 
 			String username)
 	{
 		this.accessToken = accessToken;
@@ -40,8 +40,8 @@ public class AccessToken
 	public AccessToken(
 			String accessToken, 
 			String clientId, 
-			Date issuedAt,
-			Date expiresOn,
+			Instant issuedAt,
+			Instant expiresOn,
 			String username, 
 			String refreshToken)
 	{
@@ -57,9 +57,9 @@ public class AccessToken
 	
 	public String getClientId() { return clientId; }
 	
-	public Date getIssuedAt() { return issuedAt; }
+	public Instant getIssuedAt() { return issuedAt; }
 	
-	public Date getExpiresOn() { return expiresOn; }
+	public Instant getExpiresOn() { return expiresOn; }
 	
 	public String getUsername() { return username; }
 	

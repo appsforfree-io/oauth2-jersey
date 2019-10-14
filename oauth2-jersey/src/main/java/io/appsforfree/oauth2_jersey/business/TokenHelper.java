@@ -11,6 +11,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 
 public class TokenHelper 
@@ -21,17 +22,15 @@ public class TokenHelper
 			String refreshToken) 
 	{ 
 		Key key = Keys.hmacShaKeyFor(Base64.getDecoder().decode("77tPG4G6fLDfMHWS9MYVIYixw1t4IWmVI5W8CPp3BVU="));
-		ZonedDateTime issuedAtDateTime = ZonedDateTime.now();
-		ZonedDateTime expiresOnDateTime = issuedAtDateTime.plusHours(1);
-		Date issuedAt = Date.from(issuedAtDateTime.toInstant());
-		Date expiresOn = Date.from(expiresOnDateTime.toInstant());
+		Instant issuedAt = Instant.now();
+		Instant expiresOn = issuedAt.plusSeconds(3600);
 		Map<String, Object> body = new HashMap<>();
 		body.put("username", username);
 		body.put("client_id", clientId);
 		String jws = Jwts
 				.builder()
-				.setIssuedAt(issuedAt)
-				.setExpiration(expiresOn)
+				.setIssuedAt(Date.from(issuedAt))
+				.setExpiration(Date.from(expiresOn))
 				.addClaims(body)
 				.signWith(key).compact();
 		return new AccessToken(
