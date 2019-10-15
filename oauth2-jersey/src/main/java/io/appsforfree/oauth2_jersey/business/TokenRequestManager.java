@@ -2,14 +2,11 @@ package io.appsforfree.oauth2_jersey.business;
 
 import java.util.List;
 
-import io.appsforfree.oauth2_jersey.dataaccess.AccessTokenStore;
 import io.appsforfree.oauth2_jersey.dataaccess.ClientStore;
 import io.appsforfree.oauth2_jersey.dataaccess.GrantTypeStore;
-import io.appsforfree.oauth2_jersey.dataaccess.RefreshTokenStore;
 import io.appsforfree.oauth2_jersey.dataaccess.ScopeStore;
 import io.appsforfree.oauth2_jersey.domain.AccessToken;
 import io.appsforfree.oauth2_jersey.domain.Client;
-import io.appsforfree.oauth2_jersey.domain.RefreshToken;
 import io.appsforfree.oauth2_jersey.domain.TokenResponse;
 import io.appsforfree.oauth2_jersey.domain.exception.ErrorResponseException;
 import io.appsforfree.oauth2_jersey.domain.exception.InvalidClientException;

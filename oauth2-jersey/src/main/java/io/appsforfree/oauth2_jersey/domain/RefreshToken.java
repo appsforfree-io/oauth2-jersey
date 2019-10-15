@@ -24,6 +24,8 @@ public class RefreshToken
 		this.username = username;
 	}
 	
+	public boolean isExpired() { return Instant.now().isAfter(expiresOn); }
+	
 	public String getRefreshToken() { return refreshToken; }
 	
 	public String getClientId() { return clientId; }

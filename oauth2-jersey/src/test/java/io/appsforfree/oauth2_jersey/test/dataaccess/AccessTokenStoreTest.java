@@ -1,6 +1,5 @@
 package io.appsforfree.oauth2_jersey.test.dataaccess;
 
-import java.io.FileInputStream;
 import java.time.Instant;
 
 import org.dbunit.DBTestCase;
