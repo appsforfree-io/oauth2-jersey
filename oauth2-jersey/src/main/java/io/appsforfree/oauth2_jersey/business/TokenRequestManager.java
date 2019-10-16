@@ -58,7 +58,7 @@ public abstract class TokenRequestManager
 	private void checkGrantType(TokenRequest tokenRequest) throws UnauthorizedClientException
 	{
 		List<String> grantTypes = grantTypeStore.getSupportedGrantTypes(tokenRequest.getClientId());
-		if (!grantTypes.contains("password"))
+		if (!grantTypes.contains(tokenRequest.getGrantType().getName()))
 			throw new UnauthorizedClientException(
 					"The client is not authorized to request an access token using this method");
 	}
