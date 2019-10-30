@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Scope scope='profile' />
+	<Client client_id='12345' client_secret='54321' client_type='confidential' />
+	<SupportedGrantType client_id='12345' grant_type='authorization_code' />
+	<SupportedGrantType client_id='12345' grant_type='refresh_token' />
+	<ValidScope client_id='12345' scope='profile' />
+	<User username='myUsername' password='myPassword' />
+    <AuthorizationCode code="anAuthorizationCode" redirect_uri='http://localhost:8080/callback' client_id='12345' issued_at='2019-10-30 15:57:00.000000000' expires_on='2020-10-30 10:52:00.000000000' username='myUsername' />
+</dataset>
