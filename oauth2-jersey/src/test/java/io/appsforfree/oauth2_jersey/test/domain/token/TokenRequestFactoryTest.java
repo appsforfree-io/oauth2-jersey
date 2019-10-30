@@ -10,8 +10,10 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.junit.Test;
 
+import io.appsforfree.oauth2_jersey.domain.request.ClientCredentialsTokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.GrantType;
 import io.appsforfree.oauth2_jersey.domain.request.PasswordTokenRequest;
+import io.appsforfree.oauth2_jersey.domain.request.RefreshTokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.TokenRequestFactory;;
 
 public class TokenRequestFactoryTest 
@@ -53,6 +55,26 @@ public class TokenRequestFactoryTest
 	}
 	
 	@Test
+	public void test_createRequest_validParams_tokenRequestIsRefreshToken()
+	{
+		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
+		map.add("grant_type", "refresh_token");
+		map.add("username", "123456");
+		map.add("password", "654321");
+		assertTrue(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==") instanceof RefreshTokenRequest);
+	}
+	
+	@Test
+	public void test_createRequest_validParams_tokenRequestIsClientCredentials()
+	{
+		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
+		map.add("grant_type", "client_credentials");
+		map.add("username", "123456");
+		map.add("password", "654321");
+		assertTrue(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==") instanceof ClientCredentialsTokenRequest);
+	}
+	
+	@Test
 	public void test_createRequest_validParams_grantTypeEqualsPassword()
 	{
 		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
@@ -69,6 +91,15 @@ public class TokenRequestFactoryTest
 		map.add("grant_type", "refresh_token");
 		map.add("refresh_token", "1234567890");
 		assertEquals(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==").getGrantType(), GrantType.REFRESHTOKEN);
+	}
+	
+	@Test
+	public void test_createRequest_validParams_grantTypeEqualsClientCredentials()
+	{
+		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
+		map.add("grant_type", "client_credentials");
+		map.add("refresh_token", "1234567890");
+		assertEquals(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==").getGrantType(), GrantType.CLIENTCREDENTIALS);
 	}
 	
 	@Test

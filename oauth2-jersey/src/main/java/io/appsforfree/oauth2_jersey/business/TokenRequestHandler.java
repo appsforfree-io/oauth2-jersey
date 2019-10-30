@@ -19,6 +19,8 @@ public class TokenRequestHandler
 		{
 			case PASSWORD:
 				return PasswordRequestManager.getInstance().handleTokenRequest(tokenRequest);
+			case REFRESHTOKEN:
+				return RefreshTokenRequestManager.getInstance().handleTokenRequest(tokenRequest);
 			default:
 				throw new UnsupportedGrantTypeException("The authorization grant type is not supported");
 		}

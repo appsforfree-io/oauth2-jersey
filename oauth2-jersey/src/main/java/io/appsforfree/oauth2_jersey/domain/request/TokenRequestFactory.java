@@ -22,6 +22,8 @@ public class TokenRequestFactory
 				return createPasswordRequest(body, authorization);
 			case REFRESHTOKEN:
 				return createRefreshTokenRequest(body, authorization);
+			case CLIENTCREDENTIALS:
+				return createClientCredentialsRequest(body, authorization);
 			default:
 				return null;
 		}
@@ -60,6 +62,22 @@ public class TokenRequestFactory
 		String scope = body.getFirst("scope");
 		return new RefreshTokenRequest(
 				refreshToken, 
+				clientId, 
+				clientSecret, 
+				scope);
+	}
+	
+	private static ClientCredentialsTokenRequest createClientCredentialsRequest(
+			MultivaluedMap<String, String> body, 
+			String authorization)
+	{
+		String basicToken = AuthorizationHelper.getToken(authorization);
+		if (basicToken == null) return null;
+		
+		String clientId = AuthorizationHelper.getClientId(basicToken);
+		String clientSecret = AuthorizationHelper.getClientSecret(basicToken);
+		String scope = body.getFirst("scope");
+		return new ClientCredentialsTokenRequest( 
 				clientId, 
 				clientSecret, 
 				scope);

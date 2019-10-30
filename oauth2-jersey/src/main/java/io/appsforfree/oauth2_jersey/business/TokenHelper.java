@@ -24,7 +24,8 @@ public class TokenHelper
 		Instant issuedAt = Instant.now();
 		Instant expiresOn = issuedAt.plusSeconds(3600);
 		Map<String, Object> body = new HashMap<>();
-		body.put("username", username);
+		if (username != null)
+			body.put("username", username);
 		body.put("client_id", clientId);
 		String jws = Jwts
 				.builder()
