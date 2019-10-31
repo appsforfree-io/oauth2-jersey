@@ -19,6 +19,9 @@ public class RefreshTokenRequestManager extends TokenRequestManager
 	public static RefreshTokenRequestManager getInstance() { return refreshTokenRequestManager; }
 	
 	@Override
+	public boolean shouldCheckScopes() { return true; }
+	
+	@Override
 	public AccessToken createAccessToken(
 			TokenRequest tokenRequest) throws ErrorResponseException 
 	{

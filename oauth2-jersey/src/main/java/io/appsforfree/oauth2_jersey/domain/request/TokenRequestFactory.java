@@ -24,6 +24,8 @@ public class TokenRequestFactory
 				return createRefreshTokenRequest(body, authorization);
 			case CLIENTCREDENTIALS:
 				return createClientCredentialsRequest(body, authorization);
+			case AUTHORIZATIONCODE:
+				return createAuthorizationCodeRequest(body, authorization);
 			default:
 				return null;
 		}
@@ -81,5 +83,23 @@ public class TokenRequestFactory
 				clientId, 
 				clientSecret, 
 				scope);
+	}
+	
+	private static AuthorizationCodeTokenRequest createAuthorizationCodeRequest(
+			MultivaluedMap<String, String> body, 
+			String authorization)
+	{
+		String basicToken = AuthorizationHelper.getToken(authorization);
+		if (basicToken == null) return null;
+		
+		String clientId = AuthorizationHelper.getClientId(basicToken);
+		String clientSecret = AuthorizationHelper.getClientSecret(basicToken);
+		String code = body.getFirst("code");
+		String redirectUri = body.getFirst("redirect_uri");
+		return new AuthorizationCodeTokenRequest( 
+				code,
+				redirectUri,
+				clientId, 
+				clientSecret);
 	}
 }

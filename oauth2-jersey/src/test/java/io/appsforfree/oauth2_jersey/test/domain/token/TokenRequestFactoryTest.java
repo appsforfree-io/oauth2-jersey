@@ -10,6 +10,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.junit.Test;
 
+import io.appsforfree.oauth2_jersey.domain.request.AuthorizationCodeTokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.ClientCredentialsTokenRequest;
 import io.appsforfree.oauth2_jersey.domain.request.GrantType;
 import io.appsforfree.oauth2_jersey.domain.request.PasswordTokenRequest;
@@ -75,6 +76,16 @@ public class TokenRequestFactoryTest
 	}
 	
 	@Test
+	public void test_createRequest_validParams_tokenRequestIsAuthorizationCode()
+	{
+		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
+		map.add("grant_type", "authorization_code");
+		map.add("code", "1234567");
+		map.add("redirect_uri", "http://localhost:8080/redirect");
+		assertTrue(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==") instanceof AuthorizationCodeTokenRequest);
+	}
+	
+	@Test
 	public void test_createRequest_validParams_grantTypeEqualsPassword()
 	{
 		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
@@ -91,6 +102,16 @@ public class TokenRequestFactoryTest
 		map.add("grant_type", "refresh_token");
 		map.add("refresh_token", "1234567890");
 		assertEquals(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==").getGrantType(), GrantType.REFRESHTOKEN);
+	}
+	
+	@Test
+	public void test_createRequest_validParams_grantTypeEqualsAuthorizationCode()
+	{
+		MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
+		map.add("grant_type", "authorization_code");
+		map.add("code", "1234567");
+		map.add("redirect_uri", "http://localhost:8080/redirect");
+		assertEquals(TokenRequestFactory.createRequest(map, "Basic MTIzNDU2OjY1NDMyMQ==").getGrantType(), GrantType.AUTHORIZATIONCODE);
 	}
 	
 	@Test

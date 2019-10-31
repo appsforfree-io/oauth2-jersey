@@ -36,6 +36,7 @@ public abstract class TokenRequestManager
 		return new TokenResponse(accessToken);
 	}
 	
+	public abstract boolean shouldCheckScopes();
 	public abstract AccessToken createAccessToken(TokenRequest tokenRequest) throws ErrorResponseException;
 	
 	private void checkRequest(TokenRequest tokenRequest) throws InvalidRequestException
@@ -65,6 +66,7 @@ public abstract class TokenRequestManager
 	
 	private void checkValidScopes(TokenRequest tokenRequest) throws InvalidScopeException
 	{
+		if (!shouldCheckScopes()) { return; }
 		List<String> validScopes = scopeStore.getValidScopes(tokenRequest.getClientId());
 		String[] scopes = tokenRequest.getScope().split(" ");
 		for (String requestedScope: scopes)

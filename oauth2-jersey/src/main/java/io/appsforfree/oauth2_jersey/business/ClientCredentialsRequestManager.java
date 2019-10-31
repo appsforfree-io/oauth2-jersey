@@ -17,6 +17,9 @@ public class ClientCredentialsRequestManager extends TokenRequestManager
 	public static ClientCredentialsRequestManager getInstance() { return clientCredentialsRequestManager; }
 	
 	@Override
+	public boolean shouldCheckScopes() { return true; }
+	
+	@Override
 	public AccessToken createAccessToken(
 			TokenRequest tokenRequest) throws ErrorResponseException 
 	{
