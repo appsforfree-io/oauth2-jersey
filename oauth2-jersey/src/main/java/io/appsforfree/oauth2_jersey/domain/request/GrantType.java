@@ -4,7 +4,8 @@ public enum GrantType
 {
 	PASSWORD("password"),
 	REFRESHTOKEN("refresh_token"),
-	CLIENTCREDENTIALS("client_credentials");
+	CLIENTCREDENTIALS("client_credentials"),
+	AUTHORIZATIONCODE("authorization_code");
 	
 	private String name;
 	

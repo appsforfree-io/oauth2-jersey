@@ -22,6 +22,9 @@ public class PasswordRequestManager extends TokenRequestManager
 	public static PasswordRequestManager getInstance() { return passwordRequestManager; }
 
 	@Override
+	public boolean shouldCheckScopes() { return true; }
+	
+	@Override
 	public AccessToken createAccessToken(TokenRequest tokenRequest) throws ErrorResponseException
 	{
 		PasswordTokenRequest passwordTokenRequest = (PasswordTokenRequest)tokenRequest;
